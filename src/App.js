@@ -8,23 +8,30 @@ function App() {
   const [finalSearch, setFinalSearch] = useState("");
   return (
     <div>
-      <div className="flex justify-center items-center py-2">
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          className="border-2 rounded-md border-slate-700 outline-none px-8 py-1 w-[45vw]"
-          type="text"
-          placeholder="Search for Movies"
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setFinalSearch(search);
-            setSearch("");
-          }}
-          className="px-6 py-1 text-lg bg-cyan-700 mx-6 rounded-md text-white font-bold"
-        >
-          Submit
-        </button>
+      <div className="py-2 bg-transparent">
+        <div className="flex justify-around items-center">
+          <div>
+            <h1 className="text-5xl font-bold font-Qwitcher">Wat da Review</h1>
+          </div>
+          <div className="border-[2px] rounded-full px-3">
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              className="border-2 rounded-md border-none outline-none px-8 py-1"
+              type="text"
+              placeholder="Search for Movies"
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setFinalSearch(search);
+                setSearch("");
+              }}
+              className="px-4 py-1 text-sm rounded-md text-white font-bold"
+            >
+              &#128269;
+            </button>
+          </div>
+        </div>
       </div>
       <Routes>
         <Route path="/" exact element={<Home searchData={finalSearch} />} />
