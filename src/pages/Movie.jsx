@@ -1,18 +1,25 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 export default function Movie() {
   const [movieInfo, setMovieInfo] = useState({});
+  const [loading, setLoading] = useState(true);
   let params = useParams();
   useEffect(() => {
     axios
-      .get(`https://www.omdbapi.com/?i=${params.id}&apikey=aa5e432d`)
+      .get(
+        `https://www.omdbapi.com/?i=${params.id}&apikey=${process.env.REACT_APP_MOVIE_API_KEY}`
+      )
       .then((res) => {
+        setLoading(false);
         setMovieInfo(res.data);
       });
   }, [params.id]);
-  console.log(movieInfo);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="">
@@ -169,9 +176,12 @@ export default function Movie() {
           <div className="p-6">
             <h1 className="text-xl font-semibold py-4">Other Ratings</h1>
             <div className="flex justify-between w-full text-center flex-wrap">
-              {movieInfo?.Ratings?.map((value) => {
+              {movieInfo?.Ratings?.map((value, idx) => {
                 return (
-                  <div className="flex flex-col space-y-2 justify-between items-center ">
+                  <div
+                    className="flex flex-col space-y-2 justify-between items-center "
+                    key={idx}
+                  >
                     <p className="text-sm text-gray-500 font-medium">
                       {value.Source}
                     </p>

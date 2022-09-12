@@ -7,6 +7,8 @@ module.exports = {
       fontFamily: {
         Qwitcher: ["Qwitcher Grypen", "cursive"],
         Caveat:["Caveat", "cursive"],
+        Nunito:["Nunito", "sans-serif"],
+        Amatic:["Amatic SC", "cursive"],
       },
     },
   },

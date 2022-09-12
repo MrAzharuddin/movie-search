@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 function Card({ poster, title, type, year, imdbID }) {
   return (
@@ -25,11 +26,11 @@ function Card({ poster, title, type, year, imdbID }) {
         <Link to={`/${imdbID}`}>
           <a
             href="#_"
-            class="relative inline-block px-4 py-2 font-medium group"
+            className="relative inline-block px-4 py-2 font-medium group"
           >
-            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-            <span class="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
-            <span class="relative text-black group-hover:text-white">
+            <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+            <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+            <span className="relative text-black group-hover:text-white">
               Find More
             </span>
           </a>
@@ -46,7 +47,7 @@ function Init() {
       style={{ backgroundImage: "url(/assets/images/moviebg.jpg)" }}
     >
       {/* <img src="/assets/images/moviebg.jpg" alt="moviebg" className="absolute -z-4 inset-0 max-h-[93vh] min-w-full" /> */}
-      <h1 className="text-6xl font-bold font-Caveat text-white relative capitalize">
+      <h1 className="md:text-6xl text-4xl text-center md:px-0 px-4  font-bold font-Caveat text-white relative capitalize">
         Search a movie name to display!
       </h1>
     </div>
@@ -55,18 +56,24 @@ function Init() {
 
 export default function Home({ searchData }) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (searchData) {
+      console.log(searchData);
       axios
-        .get(`https://www.omdbapi.com/?s=${searchData}&apikey=aa5e432d`)
+        .get(`https://www.omdbapi.com/?s=${searchData}&apikey=${process.env.REACT_APP_MOVIE_API_KEY}`)
         .then((res) => {
+          setLoading(false);
           setData(res.data.Search);
         });
     }
     // setData(searchData);
     // console.log(searchData);
   }, [searchData]);
-  console.log(data);
+  // console.log(data);
+  if (searchData && loading) {
+    return <Loading />;
+  }
   return (
     <div className="flex flex-wrap justify-center items-center bg-black bg-opacity-0">
       {searchData ? (

@@ -1,35 +1,35 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Movie from "./pages/Movie.jsx";
 
 function App() {
   const [search, setSearch] = useState("");
   const [finalSearch, setFinalSearch] = useState("");
+  const handleEnter = (e) => {
+    if(e.key === "Enter") {
+      e.preventDefault();
+      setFinalSearch(search);
+      setSearch("");
+    }
+  };
   return (
     <div>
       <div className="py-2 bg-transparent">
         <div className="flex justify-around items-center">
           <div>
-            <h1 className="text-5xl font-bold font-Qwitcher">Wat da Review</h1>
+            <h1 className="text-3xl font-bold font-Amatic">
+              <Link to="/">Wat da Review</Link>
+            </h1>
           </div>
-          <div className="border-[2px] rounded-full px-3">
+          <div className="border-b-[1px] md:text-base text-sm rounded-none md:px-1 md:max-w-[350px] max-w-[170px]">
             <input
               onChange={(e) => setSearch(e.target.value)}
-              className="border-2 rounded-md border-none outline-none px-8 py-1"
+              onKeyDown={handleEnter}
+              className="border-0 rounded-md border-none outline-none md:px-8 px-1 py-1 w-[80%]"
               type="text"
-              placeholder="Search for Movies"
+              placeholder="Search"
             />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setFinalSearch(search);
-                setSearch("");
-              }}
-              className="px-4 py-1 text-sm rounded-md text-white font-bold"
-            >
-              &#128269;
-            </button>
           </div>
         </div>
       </div>
